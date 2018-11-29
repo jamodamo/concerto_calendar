@@ -1,0 +1,102 @@
+<%= javascript_include_tag "concerto_calendar/application" %>
+<%= stylesheet_link_tag "concerto_calendar/application" %>
+
+<%= form.fields_for :config do |config| %>
+<fieldset>
+  <legend><span>Calendar</span></legend>
+    <div class="clearfix">
+      <%= config.label :calendar_source %>
+      <div class="input">
+        <%= config.select :calendar_source, Calendar::CALENDAR_SOURCES, :selected => @content.config['calendar_source'] %>
+      </div>
+    </div>
+
+<!-- google specific -->
+    <div class="clearfix">
+      <%= config.label :api_key %>
+      <div class="input">
+        <%= config.text_field :api_key, :placeholder => 'your secret API key from Google API Console', :class => "input-xxlarge", :value => @content.config['api_key'] %>
+      </div>
+    </div>
+
+    <div class="clearfix">
+      <%= config.label :calendar_id %>
+      <div class="input">
+        <%= config.text_field :calendar_id, :placeholder => 'office@soldotnabiblechapel.com', :class => "input-xlarge", :value => @content.config['calendar_id'] %>
+      </div>
+    </div>
+<!-- end of google specific -->
+
+<!-- iCal specific -->
+    <div class="clearfix">
+      <%= config.label :calendar_url %>
+      <div class="input">
+        <%= config.text_field :calendar_url, :placeholder => 'http://events.rpi.edu/webcache/v1.0/icsDays/7/no--filter.ics', :class => "input-xxlarge", :value => @content.config['calendar_url'] %>
+      </div>
+    </div>
+<!-- end of iCal specific -->
+</fieldset>
+
+<fieldset>
+  <legend><span>Filter and Format</span></legend>
+    <div class="clearfix">
+      <%= config.label :max_results %>
+      <div class="input">
+        <%= config.number_field :max_results, :class => "input-small", :value => @content.config['max_results'] %>
+      </div>
+    </div>
+
+    <div class="clearfix">
+      <%= config.label :days_ahead %>
+      <div class="input">
+        <%= config.number_field :days_ahead, :class => "input-small", :value => @content.config['days_ahead'] %>
+      </div>
+    </div>
+
+    <div class="clearfix">
+      <%= config.label :start_date %>
+      <div class="input">
+        <%= config.text_field :start_date, :class => "input-small datefield", :value => @content.config['start_date'] %>
+      </div>
+    </div>
+
+    <div class="clearfix">
+      <%= config.label :end_date %>
+      <div class="input">
+        <%= config.text_field :end_date, :class => "input-small datefield", :value => @content.config['end_date'] %>
+      </div>
+    </div>
+
+    <div class="clearfix">
+      <%= config.label :day_format %>
+      <div class="input">
+        <%= config.text_field :day_format, :placeholder => '%A %b %e', :class => "input-medium", :value => @content.config['day_format'] %>
+        <div><i>use <a href="http://www.ruby-doc.org/core-2.0/Time.html#method-i-strftime" target="_blank">strftime format</a> specifiers</i></div>
+      </div>
+    </div>
+
+    <div class="clearfix">
+      <%= config.label :time_format %>
+      <div class="input">
+        <%= config.text_field :time_format, :placeholder => '%l:%M %P', :class => "input-medium", :value => @content.config['time_format'] %>
+        <div><i>use <a href="http://www.ruby-doc.org/core-2.0/Time.html#method-i-strftime" target="_blank">strftime format</a> specifiers</i></div>
+      </div>
+    </div>
+
+    <div class="clearfix">
+      <%= config.label :output_format, 'Display Format' %>
+      <div class="input">
+        <%= config.select :output_format, Calendar::DISPLAY_FORMATS, :selected => @content.config['output_format'] %>
+      </div>
+    </div>
+
+    <div class="clearfix">
+      <%= config.label :item_template, "Item Template (for applicable display formats)" %>
+      <div class="input">
+        <%= config.text_area :item_template, placeholder:"Item Template", value: @content.config['item_template'], rows: 6 %>
+        <div><i>Specify custom HTML or leave blank for default template. Denote the following fields as #{fieldname} in your markup: title, date, time, location, description.</i></div>
+      </div>
+    </div>
+
+</fieldset>
+<% end %>
